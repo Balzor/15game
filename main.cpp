@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <ctime>
 #include <cstdlib>
+#include <iomanip>
+
 
 using namespace std;
 
@@ -82,7 +84,7 @@ void firstRequirement() {
     }
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
-            cout << "| " << gameField[i][j] << " |";
+            cout << "| " << setw(2) << gameField[i][j] << " |";
         }
         cout << "\n";
     }
@@ -150,7 +152,7 @@ void secondRequirement() {
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                cout << "| " << gameField[i][j] << " |";
+                cout << "| " << setw(2) << gameField[i][j] << " |";
             }
             cout << "\n";
         }
