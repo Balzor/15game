@@ -92,6 +92,8 @@ void firstRequirement() {
 
 void secondRequirement() {
     int puzzles;
+    bool exportFile;
+    ofstream gameFile;
 
     do{
         cout << "How many puzzles do you want?\n";
@@ -99,7 +101,20 @@ void secondRequirement() {
         cin.ignore(numeric_limits<streamsize>::max(),'\n');
         cin >> puzzles;
     }while(cin.fail());
-        cout << puzzles << ".\n";
+
+    cout << "Do you want to export your results to a .txt file?\n";
+
+    do{
+        cout << "Enter (0) for no and (1) for yes\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        cin >> exportFile;
+    }while(cin.fail());
+    if(exportFile){
+        gameFile.open ("15game.txt");
+    }
+    cout << puzzles << ".\n";
+    gameFile << puzzles <<".\n";
 
     srand(time(nullptr));
 
@@ -110,6 +125,7 @@ void secondRequirement() {
     for (int p = 0; p < puzzles; p++){
 
         cout << p+1 <<".\n";
+        gameFile << p+1 <<".\n";
 
         int count=0;
         for (int i = 0; i < 4; i++){
@@ -153,8 +169,11 @@ void secondRequirement() {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 cout << "| " << setw(2) << gameField[i][j] << " |";
+                gameFile << "| " << setw(2) << gameField[i][j] << " |";
             }
             cout << "\n";
+            gameFile << "\n";
         }
     }
+    gameFile.close();
 }
