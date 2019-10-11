@@ -6,8 +6,6 @@ using namespace std;
 
 void firstRequirement();
 
-void checkUnique(int i, int i1, bool b);
-
 int main () {
     cout << "Beginning of program\n";
     cout << "do you want to play this game\n";
@@ -68,19 +66,5 @@ void firstRequirement() {
             cout << "| " << gameField[i][j] << " |";
         }
         cout << "\n";
-    }
-}
-
-void checkUnique(int i, int i1, bool b) {
-    for (int ii = 0; ii < 4; ii++){
-        for(int jj=0; jj < 4; jj++){
-            int* currentElement = &(i);
-            if (*currentElement == i1){
-                cout << "Value exists " << *currentElement <<  endl;
-                b= true;
-            }else{
-                b=false;
-            }
-        }
     }
 }
