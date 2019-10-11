@@ -6,11 +6,19 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/b9050880/CLionProjects/15game/main.cpp
+C:/Users/konst/ProgrammingProjects/15game/15game/main.cpp
 iostream
 -
 limits
 -
 algorithm
+-
+ctime
+-
+cstdlib
+-
+iomanip
+-
+fstream
 -
 

@@ -1,17 +1,38 @@
 #include <iostream>
 #include <limits>
 #include <algorithm>
+#include <ctime>
+#include <cstdlib>
+#include <iomanip>
+#include <fstream>
 
 using namespace std;
 
 void firstRequirement();
 
+void secondRequirement();
+
 int main () {
-    cout << "Beginning of program\n";
-    cout << "do you want to play this game\n";
+    int i;
+    cout << "press any key to proceed... ";
+    cin >> i;
     int x;
-    cin >> x;
-    firstRequirement();
+    bool valid=true;
+    cout << "\nWhat do you want to do?\n\n";
+    do{
+        cout << "Choose between\n(1).First Requirement\n(2).Second Requirement\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        cin >> x;
+        if (x==1){
+            valid=false;
+            firstRequirement();
+        }
+        if (x==2){
+            valid = false;
+            secondRequirement();
+        }
+    }while(valid);
 }
 
 void firstRequirement() {
@@ -63,8 +84,77 @@ void firstRequirement() {
     }
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
-            cout << "| " << gameField[i][j] << " |";
+            cout << "| " << setw(2) << gameField[i][j] << " |";
         }
         cout << "\n";
+    }
+}
+
+void secondRequirement() {
+    int puzzles;
+
+    do{
+        cout << "How many puzzles do you want?\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        cin >> puzzles;
+    }while(cin.fail());
+        cout << puzzles << ".\n";
+
+    srand(time(nullptr));
+
+    int ** gameField = new int * [ 4 ];
+    for (int i=0; i < 4; i++)
+        gameField[i] = new int [4];
+
+    for (int p = 0; p < puzzles; p++){
+
+        cout << p+1 <<".\n";
+
+        int count=0;
+        for (int i = 0; i < 4; i++){
+            for(int j=0; j < 4; j++){
+                bool exists = true;
+                if (count!=15){
+                    do {
+                        do {
+                            int randomval = rand() % 20;
+
+                            cin.clear();
+
+                            for (int ii = 0; ii < 4; ii++){
+                                for(int jj=0; jj < 4; jj++){
+                                    int* currentElement = &(gameField[ii][jj]);
+                                    if (randomval >20 || randomval < 1){
+                                        exists =true;
+                                        break;
+                                    }
+                                    if (*currentElement == randomval){
+                                        exists = true;
+                                        break;
+                                    }else{
+                                        exists = false;
+                                    }
+                                }
+                                if (exists)
+                                    break;
+                            }
+
+                            gameField[i][j] = randomval;
+                        }while(exists);
+                    }while(cin.fail());
+                    count++;
+                }else{
+                    gameField[i][j] =0;
+                }
+            }
+        }
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                cout << "| " << setw(2) << gameField[i][j] << " |";
+            }
+            cout << "\n";
+        }
     }
 }
