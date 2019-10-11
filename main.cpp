@@ -91,20 +91,23 @@ void firstRequirement() {
 void secondRequirement() {
     int puzzles;
 
-    cout << "How many puzzles do you want?\n";
-    cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(),'\n');
-    cin >> puzzles;
+    do{
+        cout << "How many puzzles do you want?\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        cin >> puzzles;
+    }while(cin.fail());
+
 
     srand(time(nullptr));
+
+    int ** gameField = new int * [ 4 ];
+    for (int i=0; i < 4; i++)
+        gameField[i] = new int [4];
 
     for (int p = 0; p < puzzles; p++){
 
         cout << p+1 <<".\n";
-
-        int ** gameField = new int * [ 4 ];
-        for (int i=0; i < 4; i++)
-            gameField[i] = new int [4];
 
         int count=0;
         for (int i = 0; i < 4; i++){
