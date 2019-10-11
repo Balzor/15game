@@ -29,7 +29,7 @@ void firstRequirement() {
             if (count!=15){
                 do {
                     do {
-                        cout << "Please choose the number for the " << i << "," << j << " position\n";
+                        cout << "Please choose a unique number from 1-20 for the " << i << "," << j << " position\n";
                         cin.clear();
                         cin.ignore(numeric_limits<streamsize>::max(),'\n');
                         cin >> number;
@@ -37,6 +37,11 @@ void firstRequirement() {
                         for (int ii = 0; ii < 4; ii++){
                             for(int jj=0; jj < 4; jj++){
                                 int* currentElement = &(gameField[ii][jj]);
+                                if (number >20 || number < 1){
+                                    cout << "Value must be between 1-20\n";
+                                    exists =true;
+                                    break;
+                                }
                                 if (*currentElement == number){
                                     cout << "Value exists " << *currentElement <<  endl;
                                     exists = true;
