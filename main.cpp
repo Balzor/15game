@@ -4,7 +4,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <iomanip>
-
+#include <fstream>
 
 using namespace std;
 
@@ -99,7 +99,7 @@ void secondRequirement() {
         cin.ignore(numeric_limits<streamsize>::max(),'\n');
         cin >> puzzles;
     }while(cin.fail());
-
+        cout << puzzles << ".\n";
 
     srand(time(nullptr));
 
