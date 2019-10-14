@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/konst/ProgrammingProjects/15game/15game/main.cpp
+C:/Users/b9050880/CLionProjects/coursework1/15game/main.cpp
 iostream
 -
 limits
@@ -20,5 +20,7 @@ cstdlib
 iomanip
 -
 fstream
+-
+string
 -
 
