@@ -124,6 +124,33 @@ depend:
 	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\build
 .PHONY : 15game\fast
 
+CMakeFiles\BST.obj: CMakeFiles\BST.cpp.obj
+
+.PHONY : CMakeFiles\BST.obj
+
+# target to build an object file
+CMakeFiles\BST.cpp.obj:
+	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\CMakeFiles\BST.cpp.obj
+.PHONY : CMakeFiles\BST.cpp.obj
+
+CMakeFiles\BST.i: CMakeFiles\BST.cpp.i
+
+.PHONY : CMakeFiles\BST.i
+
+# target to preprocess a source file
+CMakeFiles\BST.cpp.i:
+	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\CMakeFiles\BST.cpp.i
+.PHONY : CMakeFiles\BST.cpp.i
+
+CMakeFiles\BST.s: CMakeFiles\BST.cpp.s
+
+.PHONY : CMakeFiles\BST.s
+
+# target to generate assembly for a file
+CMakeFiles\BST.cpp.s:
+	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\CMakeFiles\BST.cpp.s
+.PHONY : CMakeFiles\BST.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -160,6 +187,9 @@ help:
 	@echo ... 15game
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... CMakeFiles/BST.obj
+	@echo ... CMakeFiles/BST.i
+	@echo ... CMakeFiles/BST.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

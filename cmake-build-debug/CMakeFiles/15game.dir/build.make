@@ -77,17 +77,38 @@ CMakeFiles\15game.dir\main.cpp.s: cmake_force
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\15game.dir\main.cpp.s /c C:\Users\b9050880\CLionProjects\coursework1\15game\main.cpp
 <<
 
+CMakeFiles\15game.dir\CMakeFiles\BST.cpp.obj: CMakeFiles\15game.dir\flags.make
+CMakeFiles\15game.dir\CMakeFiles\BST.cpp.obj: CMakeFiles\BST.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\b9050880\CLionProjects\coursework1\15game\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/15game.dir/CMakeFiles/BST.cpp.obj"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1422~1.279\bin\Hostx86\x86\cl.exe @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\15game.dir\CMakeFiles\BST.cpp.obj /FdCMakeFiles\15game.dir\ /FS -c C:\Users\b9050880\CLionProjects\coursework1\15game\cmake-build-debug\CMakeFiles\BST.cpp
+<<
+
+CMakeFiles\15game.dir\CMakeFiles\BST.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/15game.dir/CMakeFiles/BST.cpp.i"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1422~1.279\bin\Hostx86\x86\cl.exe > CMakeFiles\15game.dir\CMakeFiles\BST.cpp.i @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\b9050880\CLionProjects\coursework1\15game\cmake-build-debug\CMakeFiles\BST.cpp
+<<
+
+CMakeFiles\15game.dir\CMakeFiles\BST.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/15game.dir/CMakeFiles/BST.cpp.s"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1422~1.279\bin\Hostx86\x86\cl.exe @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\15game.dir\CMakeFiles\BST.cpp.s /c C:\Users\b9050880\CLionProjects\coursework1\15game\cmake-build-debug\CMakeFiles\BST.cpp
+<<
+
 # Object files for target 15game
 15game_OBJECTS = \
-"CMakeFiles\15game.dir\main.cpp.obj"
+"CMakeFiles\15game.dir\main.cpp.obj" \
+"CMakeFiles\15game.dir\CMakeFiles\BST.cpp.obj"
 
 # External object files for target 15game
 15game_EXTERNAL_OBJECTS =
 
 15game.exe: CMakeFiles\15game.dir\main.cpp.obj
+15game.exe: CMakeFiles\15game.dir\CMakeFiles\BST.cpp.obj
 15game.exe: CMakeFiles\15game.dir\build.make
 15game.exe: CMakeFiles\15game.dir\objects1.rsp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\b9050880\CLionProjects\coursework1\15game\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable 15game.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\b9050880\CLionProjects\coursework1\15game\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable 15game.exe"
 	"C:\Users\b9050880\AppData\Local\JetBrains\CLion 2019.2.3\bin\cmake\win\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\15game.dir --rc=C:\PROGRA~2\WI3CF2~1\10\bin\100183~1.0\x86\rc.exe --mt=C:\PROGRA~2\WI3CF2~1\10\bin\100183~1.0\x86\mt.exe --manifests  -- C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1422~1.279\bin\Hostx86\x86\link.exe /nologo @CMakeFiles\15game.dir\objects1.rsp @<<
  /out:15game.exe /implib:15game.lib /pdb:C:\Users\b9050880\CLionProjects\coursework1\15game\cmake-build-debug\15game.pdb /version:0.0  /machine:X86 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib 
 <<

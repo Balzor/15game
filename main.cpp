@@ -17,6 +17,100 @@ void readFile();
 
 void printIT(int *const *gameField, bool countZero);
 
+struct node *newNode(int i);
+
+struct node
+{
+    int data;
+    struct node *left;
+    struct node *right;
+};
+/* newNode() allocates a new node with the given data and NULL left and
+   right pointers. */
+struct node *newNode(int data) {
+    // Allocate memory for new node
+    struct node* node = (struct node*)malloc(sizeof(struct node));
+
+    // Assign data to this node
+    node->data = data;
+
+    // Initialize left and right children as NULL
+    node->left = NULL;
+    node->right = NULL;
+    return(node);
+}
+
+void test() {
+    auto gameField = new int * [ 2 ];
+    for (int i=0; i < 2; i++)
+        gameField[i] = new int [2];
+
+    int number;
+    int count=0;
+    for (int i = 0; i < 2; i++){
+        for(int j=0; j < 2; j++){
+            bool exists = true;
+            if (count!=3){
+                do {
+                    do {
+                        cout << "Please choose a unique number from 1-4 for the " << i << "," << j << " position\n";
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                        cin >> number;
+
+                        for (int ii = 0; ii < 2; ii++){
+                            for(int jj=0; jj < 2; jj++){
+                                int* currentElement = &(gameField[ii][jj]);
+                                if (number >4 || number < 1){
+                                    cout << "Value must be between 1-4\n";
+                                    exists =true;
+                                    break;
+                                }
+                                if (*currentElement == number){
+                                    cout << "Value exists " << *currentElement <<  endl;
+                                    exists = true;
+                                    break;
+                                }else{
+                                    exists = false;
+                                }
+                            }
+                            if (exists)
+                                break;
+                        }
+                        gameField[i][j] = number;
+                    }while(exists);
+                }while(cin.fail());
+                count++;
+            }else{
+                gameField[i][j] =0;
+            }
+        }
+    }
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            cout << "| " << setw(2) << gameField[i][j] << " |";
+        }
+        cout << "\n";
+    }
+    cout << "\n";
+
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+//            cout << "| " << setw(2) << gameField[i][j] << " |";
+            if(gameField[i][j]==0){
+                struct node *root = newNode(gameField[j][i]);
+                for (int ii = 0; ii < 2; ii++) {
+                    for (int jj = 0; jj < 2; jj++) {
+
+                    }
+                }
+            }
+        }
+        cout << "\n";
+    }
+    cout << "\n";
+}
+
 int main () {
     int i;
     cout << "press any key to proceed... ";
@@ -33,7 +127,8 @@ int main () {
             cin >> x;
             if (x==1){
                 valid=false;
-                manuallyGeneratedGame();
+//                manuallyGeneratedGame();
+                test();
             }
             if (x==2){
                 valid = false;
@@ -279,14 +374,6 @@ void readFile() {
 }
 
 void printIT(int *const *gameField, bool countZero) {
-
-//    for (int i = 0; i < 4; i++) {
-//        for (int p = 0; p < 4; p++) {
-//            cout << setw(2) << gameField[i][p]<< " ";
-//        }
-//        cout << "\n";
-//    }
-//    cout << "\n";
 
     int continueRow=0;
     int continueCol=0;

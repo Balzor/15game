@@ -84,6 +84,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/b9050880/CLionProjects/coursework1/15game/cmake-build-debug/CMakeFiles/BST.cpp">
+			<Option target="15game"/>
+		</Unit>
+		<Unit filename="C:/Users/b9050880/CLionProjects/coursework1/15game/cmake-build-debug/CMakeFiles/BST.h">
+			<Option target="15game"/>
+		</Unit>
 		<Unit filename="C:/Users/b9050880/CLionProjects/coursework1/15game/main.cpp">
 			<Option target="15game"/>
 		</Unit>

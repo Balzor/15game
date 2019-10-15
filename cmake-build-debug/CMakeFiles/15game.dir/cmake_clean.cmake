@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "15game.exe.manifest"
   "15game.lib"
   "15game.pdb"
+  "CMakeFiles/15game.dir/CMakeFiles/BST.cpp.obj"
   "CMakeFiles/15game.dir/main.cpp.obj"
 )
 
