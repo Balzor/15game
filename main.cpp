@@ -237,24 +237,42 @@ void readFile() {
     if (gameFile.is_open()){
         while ( getline (gameFile,line) ){
             for(int j = 0; j < line.length(); j++){
-                if (line.length() != 12)continue;
-                x = line[j];
-                if (j <= 0)continue;
-                if(line[j] != ' ' && line[j-1] != ' '){
-                  o = stoi(line[j-1] + x);
-                  gameField[countRow][countCol] = o;
-                  countCol == 3 ? (countCol = 0) : (countCol++);
+                if (line.length() == 12) {
+                    x = line[j];
+                    if (j > 0) {
+                        if (line[j] != ' ' && line[j - 1] != ' ') {
+                            o = stoi(line[j - 1] + x);
+                            gameField[countRow][countCol] = o;
+                            if (countCol == 3) {
+                                countCol = 0;
+                            } else {
+                                countCol++;
+                            }
+                        }
+                        if (line[j] != ' ' && line[j + 1] == ' ' && line[j - 1] == ' ') {
+                            o = stoi(x);
+                            gameField[countRow][countCol] = o;
+                            if (countCol == 3) {
+                                countCol = 0;
+                            } else {
+                                countCol++;
+                            }
+                        }
+                    }
                 }
-                if (line[j] == ' ' || line[j + 1] != ' ' || line[j - 1] != ' ') continue;
-                o = stoi(x);
-                gameField[countRow][countCol] = o;
-                countCol == 3 ? (countCol = 0) : (countCol++);
             }
+
             if (line.length() == 0){
                 printIT(gameField, countZero);
             }
-            if (line.length() != 12)continue;
-            countRow == 3 ? (countRow = 0) : (countRow++);
+
+            if (line.length() == 12) {
+                if (countRow == 3) {
+                    countRow = 0;
+                } else {
+                    countRow++;
+                }
+            }
         }
         gameFile.close();
     } else cout << "Unable to open file";
@@ -262,50 +280,61 @@ void readFile() {
 
 void printIT(int *const *gameField, bool countZero) {
 
-    for (int i = 0; i < 4; i++) {
-        for (int p = 0; p < 4; p++) {
-            cout << setw(2) << gameField[i][p]<< " ";
-        }
-        cout << "\n";
-    }
-
-    cout << "\n";
+//    for (int i = 0; i < 4; i++) {
+//        for (int p = 0; p < 4; p++) {
+//            cout << setw(2) << gameField[i][p]<< " ";
+//        }
+//        cout << "\n";
+//    }
+//    cout << "\n";
 
     int continueRow=0;
     int continueCol=0;
-    int continueColCount=0;
     int reverseRow=0;
-    int reverseRowCount=0;
     int reverseCol=0;
-    int reverseColCount=0;
     for (int i = 0; i < 4; i++) {
         int continueRowCount=0;
+        int reverseRowCount=0;
         for (int p = 0; p < 4; p++) {
             cout << setw(2) << gameField[i][p]<< " ";
 
             if (gameField[i][p]+1 == gameField[i][p+1]){
                 continueRowCount++;
             }
-            if (i != 3){
-                if (gameField[i][p]+1 == gameField[i+1][p]){
-                    continueColCount++;
-                    //TODO: it will take into effect any continues even if it forms a line or not
-                }
-            }
             if (continueRowCount == 3){
                 continueRowCount = 0;
                 continueRow++;
             }
-            if (continueColCount == 3){
-                continueColCount = 0;
+            if (i == 0 && (gameField[0][p] + 1 == gameField[0 + 1][p]) &&
+                (gameField[0][p] + 2 == gameField[0 + 2][p]) && (gameField[0][p] + 3 == gameField[0 + 3][p])) {
                 continueCol++;
             }
-            if (countZero){
+            if (gameField[i][p]-1 == gameField[i][p+1]){
+                reverseRowCount++;
+            }
+            if (reverseRowCount == 3){
+                reverseRowCount = 0;
+                reverseRow++;
+            }
+            if (i == 0 && (gameField[0][p] - 1 == gameField[0 + 1][p]) &&
+                (gameField[0][p] - 2 == gameField[0 + 2][p]) && (gameField[0][p] - 3 == gameField[0 + 3][p])) {
+                reverseCol++;
+            }
+
+            if (countZero){ // for counting the line with 0 as well
                 if (continueRowCount == 2 && gameField[i][p + 1] == 0) {
                     continueRow++;
                 }
-                if (continueColCount == 2 && gameField[i][p + 4] == 0) {
+                if (i == 0 && gameField[0 + 3][p] == 0 &&
+                    ((gameField[0][p] + 1 == gameField[0 + 1][p]) && (gameField[0][p] + 2 == gameField[0 + 2][p]))) {
                     continueCol++;
+                }
+                if (reverseRowCount == 2 && gameField[i][p + 1] == 0) {
+                    reverseRow++;
+                }
+                if (i == 0 && gameField[0 + 3][p] == 0 &&
+                    ((gameField[0][p] - 1 == gameField[0 + 1][p]) && (gameField[0][p] - 2 == gameField[0 + 2][p]))) {
+                    reverseCol++;
                 }
             }
         }
@@ -313,6 +342,6 @@ void printIT(int *const *gameField, bool countZero) {
     }
     cout <<"row = " << continueRow <<"\n"
            "column = " << continueCol << "\n"
-           "reverse row = 2341\n"
-           "reverse column = 2341\n\n";
+           "reverse row = "<< reverseRow << "\n"
+           "reverse column = " << reverseCol << "\n\n";
 }
