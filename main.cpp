@@ -6,6 +6,10 @@
 #include <iomanip>
 #include <fstream>
 #include <string>
+#include <utility>
+#include <vector>
+#include <sstream>
+#include <iterator>
 
 using namespace std;
 
@@ -17,33 +21,25 @@ void readFile();
 
 void printIT(int *const *gameField, bool countZero);
 
-struct node *newNode(int i);
+struct TreeNode{
 
-struct node
-{
-    int data;
-    struct node *left;
-    struct node *right;
+
+    vector<int> data;
+    TreeNode* left;
+    TreeNode* right;
+
+//    explicit TreeNode(int data): data(data), left(nullptr), right(nullptr) {}
+    explicit TreeNode(vector<int>  data):data(std::move(data)),left(nullptr),right(nullptr) {}
 };
-/* newNode() allocates a new node with the given data and NULL left and
-   right pointers. */
-struct node *newNode(int data) {
-    // Allocate memory for new node
-    struct node* node = (struct node*)malloc(sizeof(struct node));
-
-    // Assign data to this node
-    node->data = data;
-
-    // Initialize left and right children as NULL
-    node->left = NULL;
-    node->right = NULL;
-    return(node);
-}
 
 void test() {
     auto gameField = new int * [ 2 ];
     for (int i=0; i < 2; i++)
         gameField[i] = new int [2];
+
+    ofstream gameFile;
+    gameFile.open ("15-file.txt");
+    vector<int> gameFieldVector;
 
     int number;
     int count=0;
@@ -79,36 +75,59 @@ void test() {
                         }
                         gameField[i][j] = number;
                     }while(exists);
+                    gameFieldVector.push_back(number);
                 }while(cin.fail());
                 count++;
             }else{
                 gameField[i][j] =0;
+                gameFieldVector.push_back(0);
             }
         }
     }
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 2; j++) {
-            cout << "| " << setw(2) << gameField[i][j] << " |";
+    int countVector=0;
+    for (int x:gameFieldVector){
+        cout  << setw(2) << x << " ";
+        gameFile << setw(2) << x << " ";
+        countVector++;
+        if (countVector==2){
+            countVector=0;
+            cout<<"\n";
+            gameFile << "\n";
         }
-        cout << "\n";
     }
-    cout << "\n";
+    gameFile << "\n";
+    if (!gameFile.is_open())return;
+    gameFile.close();
 
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 2; j++) {
-//            cout << "| " << setw(2) << gameField[i][j] << " |";
-            if(gameField[i][j]==0){
-                struct node *root = newNode(gameField[j][i]);
-                for (int ii = 0; ii < 2; ii++) {
-                    for (int jj = 0; jj < 2; jj++) {
 
-                    }
-                }
-            }
-        }
-        cout << "\n";
+    ostringstream oss;
+    // Convert all but the last element to avoid a trailing ","
+    copy(gameFieldVector.begin(), gameFieldVector.end()-1,
+              ostream_iterator<int>(oss, ","));
+
+    // Now add the last element with no delimiter
+    oss << gameFieldVector.back();
+    TreeNode foo(gameFieldVector);
+
+//    cout << "data: " << foo.data <<
+//         ", left: " << foo.left <<
+//         ", right: " << foo.right <<
+//         endl;
+
+    TreeNode root(gameFieldVector);
+    TreeNode left(gameFieldVector);
+    TreeNode right(gameFieldVector);
+
+    root.left= &left;
+    root.right=&right;
+
+    TreeNode lefty = left;
+
+    if (&left==&right){
+        cout<< "lol i did domething";
     }
-    cout << "\n";
+
+//    cout << "data: 2" << root.data << root.right->data << root.left->data;
 }
 
 int main () {
@@ -148,6 +167,8 @@ void manuallyGeneratedGame() {
     auto gameField = new int * [ 4 ];
     for (int i=0; i < 4; i++)
         gameField[i] = new int [4];
+
+    vector<int> gameFieldVector;
 
     bool exportFile;
     ofstream gameFile;
@@ -191,27 +212,33 @@ void manuallyGeneratedGame() {
                                     break;
                                 }else{
                                     exists = false;
+
                                 }
                             }
                             if (exists)
                                 break;
                         }
-                        gameField[i][j] = number;
+                        gameField[i][j] = number;//array
                     }while(exists);
+                    gameFieldVector.push_back(number);
                 }while(cin.fail());
                 count++;
             }else{
                 gameField[i][j] =0;
+                gameFieldVector.push_back(0);
             }
         }
     }
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
-            cout << "| " << setw(2) << gameField[i][j] << " |";
-            gameFile << setw(2) << gameField[i][j] << " ";
+    int countVector=0;
+    for (int x:gameFieldVector){
+        cout << "| " << setw(2) << x << " |";
+        gameFile << setw(2) << x << " ";
+        countVector++;
+        if (countVector==4){
+            countVector=0;
+            cout<<"\n";
+            gameFile << "\n";
         }
-        cout << "\n";
-        gameFile << "\n";
     }
     gameFile << "\n";
     if (!gameFile.is_open())return;
@@ -310,6 +337,8 @@ void readFile() {
     for (int i=0; i < 4; i++)
         gameField[i] = new int [4];
 
+    vector<int> gameFieldVector;
+
     string x;
     string line;
     ifstream gameFile ("15-file.txt");
@@ -338,6 +367,7 @@ void readFile() {
                         if (line[j] != ' ' && line[j - 1] != ' ') {
                             o = stoi(line[j - 1] + x);
                             gameField[countRow][countCol] = o;
+                            gameFieldVector.push_back(o);
                             if (countCol == 3) {
                                 countCol = 0;
                             } else {
@@ -347,6 +377,7 @@ void readFile() {
                         if (line[j] != ' ' && line[j + 1] == ' ' && line[j - 1] == ' ') {
                             o = stoi(x);
                             gameField[countRow][countCol] = o;
+                            gameFieldVector.push_back(o);
                             if (countCol == 3) {
                                 countCol = 0;
                             } else {
@@ -359,6 +390,19 @@ void readFile() {
 
             if (line.length() == 0){
                 printIT(gameField, countZero);
+//                            int countVector=0;
+//                            for (int p:gameFieldVector){
+//                                cout << setw(2) << p << " ";
+//                                countVector++;
+//                                if (countVector==4){
+//                                    countVector=0;
+//                                    cout<<"\n";
+//                                }
+//                            }
+//                            cout << "\n";
+//                            for (int p :gameFieldVector){
+//                                gameFieldVector.pop_back();
+//                            }
             }
 
             if (line.length() == 12) {

@@ -124,32 +124,32 @@ depend:
 	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\build
 .PHONY : 15game\fast
 
-CMakeFiles\BST.obj: CMakeFiles\BST.cpp.obj
+BSTNode.obj: BSTNode.cpp.obj
 
-.PHONY : CMakeFiles\BST.obj
+.PHONY : BSTNode.obj
 
 # target to build an object file
-CMakeFiles\BST.cpp.obj:
-	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\CMakeFiles\BST.cpp.obj
-.PHONY : CMakeFiles\BST.cpp.obj
+BSTNode.cpp.obj:
+	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\BSTNode.cpp.obj
+.PHONY : BSTNode.cpp.obj
 
-CMakeFiles\BST.i: CMakeFiles\BST.cpp.i
+BSTNode.i: BSTNode.cpp.i
 
-.PHONY : CMakeFiles\BST.i
+.PHONY : BSTNode.i
 
 # target to preprocess a source file
-CMakeFiles\BST.cpp.i:
-	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\CMakeFiles\BST.cpp.i
-.PHONY : CMakeFiles\BST.cpp.i
+BSTNode.cpp.i:
+	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\BSTNode.cpp.i
+.PHONY : BSTNode.cpp.i
 
-CMakeFiles\BST.s: CMakeFiles\BST.cpp.s
+BSTNode.s: BSTNode.cpp.s
 
-.PHONY : CMakeFiles\BST.s
+.PHONY : BSTNode.s
 
 # target to generate assembly for a file
-CMakeFiles\BST.cpp.s:
-	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\CMakeFiles\BST.cpp.s
-.PHONY : CMakeFiles\BST.cpp.s
+BSTNode.cpp.s:
+	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\BSTNode.cpp.s
+.PHONY : BSTNode.cpp.s
 
 main.obj: main.cpp.obj
 
@@ -187,9 +187,9 @@ help:
 	@echo ... 15game
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... CMakeFiles/BST.obj
-	@echo ... CMakeFiles/BST.i
-	@echo ... CMakeFiles/BST.s
+	@echo ... BSTNode.obj
+	@echo ... BSTNode.i
+	@echo ... BSTNode.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

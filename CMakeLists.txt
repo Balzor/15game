@@ -4,4 +4,4 @@ project(15game)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(15game
-        main.cpp cmake-build-debug/CMakeFiles/BST.cpp cmake-build-debug/CMakeFiles/BST.h)
+        main.cpp BSTNode.cpp BSTNode.h)

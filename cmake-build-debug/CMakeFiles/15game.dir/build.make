@@ -77,35 +77,35 @@ CMakeFiles\15game.dir\main.cpp.s: cmake_force
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\15game.dir\main.cpp.s /c C:\Users\b9050880\CLionProjects\coursework1\15game\main.cpp
 <<
 
-CMakeFiles\15game.dir\CMakeFiles\BST.cpp.obj: CMakeFiles\15game.dir\flags.make
-CMakeFiles\15game.dir\CMakeFiles\BST.cpp.obj: CMakeFiles\BST.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\b9050880\CLionProjects\coursework1\15game\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/15game.dir/CMakeFiles/BST.cpp.obj"
+CMakeFiles\15game.dir\BSTNode.cpp.obj: CMakeFiles\15game.dir\flags.make
+CMakeFiles\15game.dir\BSTNode.cpp.obj: ..\BSTNode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\b9050880\CLionProjects\coursework1\15game\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/15game.dir/BSTNode.cpp.obj"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1422~1.279\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\15game.dir\CMakeFiles\BST.cpp.obj /FdCMakeFiles\15game.dir\ /FS -c C:\Users\b9050880\CLionProjects\coursework1\15game\cmake-build-debug\CMakeFiles\BST.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\15game.dir\BSTNode.cpp.obj /FdCMakeFiles\15game.dir\ /FS -c C:\Users\b9050880\CLionProjects\coursework1\15game\BSTNode.cpp
 <<
 
-CMakeFiles\15game.dir\CMakeFiles\BST.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/15game.dir/CMakeFiles/BST.cpp.i"
-	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1422~1.279\bin\Hostx86\x86\cl.exe > CMakeFiles\15game.dir\CMakeFiles\BST.cpp.i @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\b9050880\CLionProjects\coursework1\15game\cmake-build-debug\CMakeFiles\BST.cpp
+CMakeFiles\15game.dir\BSTNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/15game.dir/BSTNode.cpp.i"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1422~1.279\bin\Hostx86\x86\cl.exe > CMakeFiles\15game.dir\BSTNode.cpp.i @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\b9050880\CLionProjects\coursework1\15game\BSTNode.cpp
 <<
 
-CMakeFiles\15game.dir\CMakeFiles\BST.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/15game.dir/CMakeFiles/BST.cpp.s"
+CMakeFiles\15game.dir\BSTNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/15game.dir/BSTNode.cpp.s"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1422~1.279\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\15game.dir\CMakeFiles\BST.cpp.s /c C:\Users\b9050880\CLionProjects\coursework1\15game\cmake-build-debug\CMakeFiles\BST.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\15game.dir\BSTNode.cpp.s /c C:\Users\b9050880\CLionProjects\coursework1\15game\BSTNode.cpp
 <<
 
 # Object files for target 15game
 15game_OBJECTS = \
 "CMakeFiles\15game.dir\main.cpp.obj" \
-"CMakeFiles\15game.dir\CMakeFiles\BST.cpp.obj"
+"CMakeFiles\15game.dir\BSTNode.cpp.obj"
 
 # External object files for target 15game
 15game_EXTERNAL_OBJECTS =
 
 15game.exe: CMakeFiles\15game.dir\main.cpp.obj
-15game.exe: CMakeFiles\15game.dir\CMakeFiles\BST.cpp.obj
+15game.exe: CMakeFiles\15game.dir\BSTNode.cpp.obj
 15game.exe: CMakeFiles\15game.dir\build.make
 15game.exe: CMakeFiles\15game.dir\objects1.rsp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\b9050880\CLionProjects\coursework1\15game\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable 15game.exe"
