@@ -1,0 +1,8 @@
+# ninja log v5
+0	411	593024649	CMakeFiles/15game.dir/BSTree.cpp.obj	32e972952ffb1054
+3	507	593024649	CMakeFiles/15game.dir/main.cpp.obj	7731191363063d9a
+507	782	593024649	15game.exe	db90a0b9adfa38fb
+0	535	593025099	CMakeFiles/15game.dir/BSTree.cpp.obj	32e972952ffb1054
+536	655	593025099	15game.exe	db90a0b9adfa38fb
+1	523	593025172	CMakeFiles/15game.dir/BSTree.cpp.obj	32e972952ffb1054
+523	640	593025172	15game.exe	db90a0b9adfa38fb

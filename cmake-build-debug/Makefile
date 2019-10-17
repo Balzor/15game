@@ -124,32 +124,32 @@ depend:
 	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\build
 .PHONY : 15game\fast
 
-BSTNode.obj: BSTNode.cpp.obj
+BSTree.obj: BSTree.cpp.obj
 
-.PHONY : BSTNode.obj
+.PHONY : BSTree.obj
 
 # target to build an object file
-BSTNode.cpp.obj:
-	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\BSTNode.cpp.obj
-.PHONY : BSTNode.cpp.obj
+BSTree.cpp.obj:
+	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\BSTree.cpp.obj
+.PHONY : BSTree.cpp.obj
 
-BSTNode.i: BSTNode.cpp.i
+BSTree.i: BSTree.cpp.i
 
-.PHONY : BSTNode.i
+.PHONY : BSTree.i
 
 # target to preprocess a source file
-BSTNode.cpp.i:
-	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\BSTNode.cpp.i
-.PHONY : BSTNode.cpp.i
+BSTree.cpp.i:
+	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\BSTree.cpp.i
+.PHONY : BSTree.cpp.i
 
-BSTNode.s: BSTNode.cpp.s
+BSTree.s: BSTree.cpp.s
 
-.PHONY : BSTNode.s
+.PHONY : BSTree.s
 
 # target to generate assembly for a file
-BSTNode.cpp.s:
-	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\BSTNode.cpp.s
-.PHONY : BSTNode.cpp.s
+BSTree.cpp.s:
+	$(MAKE) -f CMakeFiles\15game.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\15game.dir\BSTree.cpp.s
+.PHONY : BSTree.cpp.s
 
 main.obj: main.cpp.obj
 
@@ -187,9 +187,9 @@ help:
 	@echo ... 15game
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... BSTNode.obj
-	@echo ... BSTNode.i
-	@echo ... BSTNode.s
+	@echo ... BSTree.obj
+	@echo ... BSTree.i
+	@echo ... BSTree.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

@@ -11,6 +11,8 @@
 #include <sstream>
 #include <iterator>
 
+#include "BSTree.h"
+
 using namespace std;
 
 void manuallyGeneratedGame();
@@ -21,17 +23,6 @@ void readFile();
 
 void printIT(int *const *gameField, bool countZero);
 
-struct TreeNode{
-
-
-    vector<int> data;
-    TreeNode* left;
-    TreeNode* right;
-
-//    explicit TreeNode(int data): data(data), left(nullptr), right(nullptr) {}
-    explicit TreeNode(vector<int>  data):data(std::move(data)),left(nullptr),right(nullptr) {}
-};
-
 void test() {
     auto gameField = new int * [ 2 ];
     for (int i=0; i < 2; i++)
@@ -39,7 +30,7 @@ void test() {
 
     ofstream gameFile;
     gameFile.open ("15-file.txt");
-    vector<int> gameFieldVector;
+    auto *gameFieldVector = new vector<int>();
 
     int number;
     int count=0;
@@ -75,17 +66,17 @@ void test() {
                         }
                         gameField[i][j] = number;
                     }while(exists);
-                    gameFieldVector.push_back(number);
+                    gameFieldVector->push_back(number);
                 }while(cin.fail());
                 count++;
             }else{
                 gameField[i][j] =0;
-                gameFieldVector.push_back(0);
+                gameFieldVector->push_back(0);
             }
         }
     }
     int countVector=0;
-    for (int x:gameFieldVector){
+    for (int x:*gameFieldVector){
         cout  << setw(2) << x << " ";
         gameFile << setw(2) << x << " ";
         countVector++;
@@ -99,35 +90,23 @@ void test() {
     if (!gameFile.is_open())return;
     gameFile.close();
 
-
-    ostringstream oss;
-    // Convert all but the last element to avoid a trailing ","
-    copy(gameFieldVector.begin(), gameFieldVector.end()-1,
-              ostream_iterator<int>(oss, ","));
-
-    // Now add the last element with no delimiter
-    oss << gameFieldVector.back();
-    TreeNode foo(gameFieldVector);
-
-//    cout << "data: " << foo.data <<
-//         ", left: " << foo.left <<
-//         ", right: " << foo.right <<
-//         endl;
-
+    // Make the nodes
     TreeNode root(gameFieldVector);
-    TreeNode left(gameFieldVector);
-    TreeNode right(gameFieldVector);
 
-    root.left= &left;
-    root.right=&right;
 
-    TreeNode lefty = left;
+    // Make and Print the tree
+    BSTree myTree {&root};
+    myTree.Print();
 
-    if (&left==&right){
-        cout<< "lol i did domething";
+    int node=0;
+    while(node!=100){
+        cout << "input node value";
+        cin >> node;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        myTree.Insert(gameFieldVector);
+        myTree.Print();
     }
-
-//    cout << "data: 2" << root.data << root.right->data << root.left->data;
 }
 
 int main () {

@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/b9050880/CLionProjects/coursework1/15game/BSTree.h
+iostream
+-
+string
+-
+vector
+-
+
 C:/Users/b9050880/CLionProjects/coursework1/15game/main.cpp
 iostream
 -
@@ -31,4 +39,6 @@ sstream
 -
 iterator
 -
+BSTree.h
+C:/Users/b9050880/CLionProjects/coursework1/15game/BSTree.h
 
