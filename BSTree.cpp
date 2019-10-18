@@ -5,6 +5,15 @@
 #include <sstream>
 #include "BSTree.h"
 
+TreeNode::TreeNode(vector<int>* data) : data(new vector<int>(*data)), left(nullptr), right(nullptr)
+{
+}
+
+TreeNode::~TreeNode()
+{
+	delete data;
+}
+
 void BSTree::Print(){
     if(this->root == nullptr){
         std::cout << "{}" << std::endl;
@@ -54,16 +63,15 @@ void BSTree::Insert(vector<int> *val) {
 
 // Insert a new value into the subtree starting at node
 void BSTree::Insert(vector<int>* val, TreeNode*& node) {
-
     if(node == nullptr){
         // Case: node is a nullptr
         // Make a new TreeNode for it to point to
         node = new TreeNode(val);
     } else{
-        if(val < node->data){
+        if(val->back() < node->data->back()){
             // Case: val is < node's data
             this->Insert(val, node->left);
-        } else if(val > node->data){
+        } else if(val->back() > node->data->back()){
             // Case: val is > node's data
             this->Insert(val, node->right);
         } else{

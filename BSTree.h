@@ -12,15 +12,14 @@ using namespace std;
 
 struct TreeNode{
     // member vars
-    vector<int> * data1;
 //    int data;
     vector<int> * data;
     TreeNode* left;
     TreeNode* right;
 
     // constructor
-    TreeNode(vector<int> * data): data(data), left(nullptr), right(nullptr) {}
-    //TreeNode(vector<int> *data1):data1(data1),left(nullptr),right(nullptr){}
+	TreeNode(vector<int>* data);
+	~TreeNode();
 };
 
 class BSTree {

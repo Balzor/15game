@@ -1,15 +1,12 @@
-#include <iostream>
 #include <limits>
-#include <algorithm>
 #include <ctime>
 #include <cstdlib>
 #include <iomanip>
 #include <fstream>
-#include <string>
-#include <utility>
-#include <vector>
 #include <sstream>
 #include <iterator>
+#include <algorithm>
+
 
 #include "BSTree.h"
 
@@ -31,6 +28,7 @@ void test() {
     ofstream gameFile;
     gameFile.open ("15-file.txt");
     auto *gameFieldVector = new vector<int>();
+    auto *gameFieldVector2 = new vector<int>();
 
     int number;
     int count=0;
@@ -89,24 +87,42 @@ void test() {
     gameFile << "\n";
     if (!gameFile.is_open())return;
     gameFile.close();
+		
+	int j = gameFieldVector->back();
+    cout << "This is the zero hopefully " << gameFieldVector->back();
 
     // Make the nodes
     TreeNode root(gameFieldVector);
 
 
     // Make and Print the tree
-    BSTree myTree {&root};
-    myTree.Print();
 
-    int node=0;
-    while(node!=100){
-        cout << "input node value";
-        cin >> node;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(),'\n');
-        myTree.Insert(gameFieldVector);
+    BSTree myTree {&root};
+//    myTree.Print();
+
+//    int node=0;
+//    while(node!=100){
+//        cout << "input node value";
+//        cin >> node;
+//        cin.clear();
+//        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+//        myTree.Insert(gameFieldVector);
+//        myTree.Print();
+//    }
+    int num=0;
+    while(num!=100){
+        do{
+            cout<<"create one now\n";
+            cin >> num;
+            gameFieldVector2->push_back(num);
+        }while(gameFieldVector2->size() != 4);
+        myTree.Insert(gameFieldVector2);
         myTree.Print();
+       
+		gameFieldVector2->clear();
     }
+
+
 }
 
 int main () {
