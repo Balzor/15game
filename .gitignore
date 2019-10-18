@@ -1,0 +1,5 @@
+### CLion ###
+out/
+cmake-build-debug/
+.vs
+.idea
