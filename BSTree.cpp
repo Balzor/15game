@@ -5,15 +5,6 @@
 #include <sstream>
 #include "BSTree.h"
 
-TreeNode::TreeNode(vector<int>* data) : data(new vector<int>(*data)), left(nullptr), right(nullptr)
-{
-}
-
-TreeNode::~TreeNode()
-{
-	delete data;
-}
-
 void BSTree::Print(){
     if(this->root == nullptr){
         std::cout << "{}" << std::endl;
@@ -23,15 +14,14 @@ void BSTree::Print(){
 }
 
 
-std::string vecToString(vector<int>* v) {
-    vector<int> a = * v;
+std::string vecToString(const vector<int>& v) {
     std::stringstream ss;
-    for(size_t i = 0; i < a.size(); i++)
+    for(size_t i = 0; i < v.size(); i++)
     {
         if(i != 0){
             ss << ",";
         }
-        ss <<  a[i];
+        ss <<  v[i];
     }
     std::string s = ss.str();
     return s;
@@ -57,21 +47,21 @@ std::string BSTree::SubTreeAsString(TreeNode* node){
 }
 
 // Insert a new value into the tree
-void BSTree::Insert(vector<int> *val) {
+void BSTree::Insert(const vector<int>& val) {
     this->Insert(val, this->root);
 }
 
 // Insert a new value into the subtree starting at node
-void BSTree::Insert(vector<int>* val, TreeNode*& node) {
+void BSTree::Insert(const vector<int>& val, TreeNode*& node) {
     if(node == nullptr){
         // Case: node is a nullptr
         // Make a new TreeNode for it to point to
         node = new TreeNode(val);
     } else{
-        if(val->back() < node->data->back()){
+        if(val.back() < node->data.back()){
             // Case: val is < node's data
             this->Insert(val, node->left);
-        } else if(val->back() > node->data->back()){
+        } else if(val.back() > node->data.back()){
             // Case: val is > node's data
             this->Insert(val, node->right);
         } else{
