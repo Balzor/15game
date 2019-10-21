@@ -20,10 +20,20 @@ void readFile();
 
 void printIT(int *const *gameField, bool countZero);
 
+void buildTree(int size, const vector<int> &gameFieldVector, TreeNode* node);
+
+size_t zeroPosition(const vector<int> &gameFieldVector);
+
 void test() {
-    auto gameField = new int * [ 2 ];
-    for (int i=0; i < 2; i++)
-        gameField[i] = new int [2];
+    int size;
+    cout << "set the size of the puzzle\n";
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+    cin >> size;
+
+    auto gameField = new int * [ size ];
+    for (int i=0; i < size; i++)
+        gameField[i] = new int [size];
 
     ofstream gameFile;
     gameFile.open ("15-file.txt");
@@ -32,21 +42,23 @@ void test() {
 
     int number;
     int count=0;
-    for (int i = 0; i < 2; i++){
-        for(int j=0; j < 2; j++){
+
+
+    for (int i = 0; i < size; i++){
+        for(int j=0; j < size; j++){
             bool exists = true;
-            if (count!=3){
+            if (count != (size*size-1) ){
                 do {
                     do {
-                        cout << "Please choose a unique number from 1-4 for the " << i << "," << j << " position\n";
+                        cout << "Please choose a unique number for the " << i << "," << j << " position\n";
                         cin.clear();
                         cin.ignore(numeric_limits<streamsize>::max(),'\n');
                         cin >> number;
 
-                        for (int ii = 0; ii < 2; ii++){
-                            for(int jj=0; jj < 2; jj++){
+                        for (int ii = 0; ii < size; ii++){
+                            for(int jj=0; jj < size; jj++){
                                 int* currentElement = &(gameField[ii][jj]);
-                                if (number >4 || number < 1){
+                                if (number >20 || number < 1){
                                     cout << "Value must be between 1-4\n";
                                     exists =true;
                                     break;
@@ -78,7 +90,7 @@ void test() {
         cout  << setw(2) << x << " ";
         gameFile << setw(2) << x << " ";
         countVector++;
-        if (countVector==2){
+        if (countVector==size){
             countVector=0;
             cout<<"\n";
             gameFile << "\n";
@@ -89,43 +101,59 @@ void test() {
     gameFile.close();
 
     // Make the nodes
-    TreeNode root(gameFieldVector);
-
+    TreeNode myTree(gameFieldVector);
 
     // Make and Print the tree
+//    TreeNode myTree {&root};
 
-    BSTree myTree {&root};
-//    myTree.Print();
+    buildTree(size, gameFieldVector, &myTree);
 
-//    int node=0;
-//    while(node!=100){
-//        cout << "input node value";
-//        cin >> node;
-//        cin.clear();
-//        cin.ignore(numeric_limits<streamsize>::max(),'\n');
-//        myTree.Insert(gameFieldVector);
-//        myTree.Print();
-//    }
-    int num=0;
-    while(num!=100){
-        do{
-            cout<<"create one now\n";
-            cin >> num;
-            gameFieldVector2.push_back(num);
-        }while(gameFieldVector2.size() != 4);
-        myTree.Insert(gameFieldVector2);
-        myTree.Print();
-       
-		gameFieldVector2.clear();
+    myTree.Print();
+}
+
+size_t zeroPosition(const vector<int> &gameFieldVector) {
+    for (size_t i=0; i < gameFieldVector.size(); i++)
+        if (gameFieldVector.at(i)==0)
+            return i;
+    return 0;
+}
+
+void buildTree(int size, const vector<int> &gameFieldVector, TreeNode* myTree) {
+    size_t position = zeroPosition(gameFieldVector);
+
+    if (position % size > 0){
+//        //go left
+		vector<int> gameFieldLeft = gameFieldVector;
+        iter_swap(gameFieldLeft.begin() + position, gameFieldLeft.begin() + (position-1));
+        TreeNode* node = TreeNode::Insert(gameFieldLeft, myTree, LEFT);
+        if (node)
+            buildTree(size, gameFieldLeft, node);
     }
+
+    if (position % size != size-1) {
+        //go right
+        vector<int> gameFieldRight = gameFieldVector;
+        iter_swap(gameFieldRight.begin() + position, gameFieldRight.begin() + (position-1));
+        TreeNode* node = TreeNode::Insert(gameFieldRight, myTree, RIGHT);
+        if (node)
+            buildTree(size, gameFieldRight, node);
+    }
+
+//    //go right
+//    iter_swap(gameFieldVector2.begin() + position, gameFieldVector2.begin() + (position+1));
+//
+//    //go up
+//    iter_swap(gameFieldVector2.begin() + position, gameFieldVector2.begin() - (position-size));
+//    //go down
+//    iter_swap(gameFieldVector2.begin() + position, gameFieldVector2.begin() + (position+size));
+
 
 
 }
 
+
+
 int main () {
-//    int i;
-//    cout << "press any key to proceed... ";
-//    cin >> i;
     int x=0;
     bool valid=true;
     bool again=true;

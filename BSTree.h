@@ -10,29 +10,51 @@
 
 using namespace std;
 
+enum Direction {
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN
+};
+
 struct TreeNode{
     // member vars
 //    int data;
     vector<int> data;
     TreeNode* left;
     TreeNode* right;
+    TreeNode* up;
+    TreeNode* down;
+
 
     // constructor
-	TreeNode(const vector<int>& data) : data(data), left(nullptr), right(nullptr) {};
-};
+	TreeNode(const vector<int>& data) : data(data), left(nullptr), right(nullptr),down(nullptr),up(nullptr) {};
 
-class BSTree {
 public:
-    BSTree():root(nullptr){}
-    explicit BSTree(TreeNode* rootNode): root(rootNode) {}
+//    TreeNode():root(nullptr){}
+//    explicit TreeNode(TreeNode* rootNode): root(rootNode) {}
 
     void Print();
-    void Insert(const vector<int>& val);
-
+    //TreeNode* Insert(const vector<int>& val, Direction dir);
+    static TreeNode* Insert(const vector<int>& val, TreeNode*& node, Direction dir);
 private:
-    TreeNode* root;
+//    TreeNode* root;
     static string SubTreeAsString(TreeNode *node);
-    void Insert(const vector<int>& val, TreeNode*& node);
+
 };
+
+//class BSTree {
+//public:
+//    BSTree():root(nullptr){}
+//    explicit BSTree(TreeNode* rootNode): root(rootNode) {}
+//
+//    void Print();
+//    TreeNode* Insert(const vector<int>& val, Direction dir);
+//
+//private:
+//    TreeNode* root;
+//    static string SubTreeAsString(TreeNode *node);
+//    TreeNode* Insert(const vector<int>& val, TreeNode*& node, Direction dir);
+//};
 
 #endif //INC_15GAME_BSTREE_H
