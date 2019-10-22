@@ -18,43 +18,33 @@ enum Direction {
 };
 
 struct TreeNode{
-    // member vars
-//    int data;
     vector<int> data;
     TreeNode* left;
     TreeNode* right;
     TreeNode* up;
     TreeNode* down;
 
-
     // constructor
 	TreeNode(const vector<int>& data) : data(data), left(nullptr), right(nullptr),down(nullptr),up(nullptr) {};
 
 public:
-//    TreeNode():root(nullptr){}
-//    explicit TreeNode(TreeNode* rootNode): root(rootNode) {}
 
     void Print();
-    //TreeNode* Insert(const vector<int>& val, Direction dir);
     static TreeNode* Insert(const vector<int>& val, TreeNode*& node, Direction dir);
+    static bool ifNodeExists(TreeNode* node, const vector<int>& val);
+
+    //https://stackoverflow.com/questions/20511347/a-good-hash-function-for-a-vector
+    static std::size_t hash(std::vector<int> const& vec) {
+        std::size_t seed = vec.size();
+        for(auto& i : vec) {
+            seed ^= i + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+        }
+        return seed;
+    }
+
 private:
-//    TreeNode* root;
     static string SubTreeAsString(TreeNode *node);
 
+
 };
-
-//class BSTree {
-//public:
-//    BSTree():root(nullptr){}
-//    explicit BSTree(TreeNode* rootNode): root(rootNode) {}
-//
-//    void Print();
-//    TreeNode* Insert(const vector<int>& val, Direction dir);
-//
-//private:
-//    TreeNode* root;
-//    static string SubTreeAsString(TreeNode *node);
-//    TreeNode* Insert(const vector<int>& val, TreeNode*& node, Direction dir);
-//};
-
 #endif //INC_15GAME_BSTREE_H

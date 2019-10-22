@@ -4,15 +4,9 @@
 
 #include <sstream>
 #include "BSTree.h"
-//#include<bits/stdc++.h>
-
 
 void TreeNode::Print(){
-//    if(this->node == nullptr){
-//        std::cout << "{}" << std::endl;
-//    } else{
-        std::cout << TreeNode::SubTreeAsString(this) << std::endl;
-//    }
+    std::cout << TreeNode::SubTreeAsString(this) << std::endl;
 }
 
 
@@ -64,23 +58,14 @@ std::string TreeNode::SubTreeAsString(TreeNode* node){
     result = "{" + vecToString(node->data) + ", left:[" + leftStr + "], right:[" + rightStr + "], up:[" + upStr + "], down:[" + downStr + "]}";
     return result;
 }
-
-// Insert a new value into the tree
-//TreeNode* TreeNode::Insert(const vector<int>& val, Direction dir) {
-//    return this->Insert(val, this, dir);
-//}
-
-// Insert a new value into the subtree starting at node
 TreeNode* TreeNode::Insert(const vector<int>& val, TreeNode*& node, Direction dir) {
     if(node == nullptr){
-        // Case: node is a nullptr
-        // Make a new TreeNode for it to point to
         node = new TreeNode(val);
         return node;
     } else{
-        if(val == node->data){
-            std::cout << "Warning: Value already exists, so nothing will be done." << std::endl;
-        }else{
+//        if(val == node->data){
+//            std::cout << "Warning: Value already exists, so nothing will be done." << std::endl;
+//        }else{
             switch (dir)
             {
                 case LEFT:
@@ -100,6 +85,25 @@ TreeNode* TreeNode::Insert(const vector<int>& val, TreeNode*& node, Direction di
                     break;
             }
         }
-    }
+//    }
     return nullptr;
+}
+
+bool TreeNode::ifNodeExists(TreeNode* node, const vector<int>& val)
+{
+    if (node == nullptr)
+        return false;
+
+    if (node->data == val)
+        return true;
+
+    bool res1 = ifNodeExists(node->left, val);
+
+    bool res2 = ifNodeExists(node->right, val);
+
+    bool res3 =  ifNodeExists(node->up, val);
+
+    bool res4 =  ifNodeExists(node->down, val);
+
+    return res1 || res2 || res3 || res4;
 }
