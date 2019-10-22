@@ -9,19 +9,18 @@ void TreeNode::Print(){
     std::cout << TreeNode::SubTreeAsString(this) << std::endl;
 }
 
-
-std::string vecToString(const vector<int>& v) {
-    std::stringstream ss;
-    for(size_t i = 0; i < v.size(); i++)
-    {
-        if(i != 0){
-            ss << ",";
-        }
-        ss <<  v[i];
-    }
-    std::string s = ss.str();
-    return s;
-}
+//std::string vecToString(const size_t &v) {
+//    std::stringstream ss;
+//    for(size_t i = 0; i < v.size(); i++)
+//    {
+//        if(i != 0){
+//            ss << ",";
+//        }
+//        ss <<  v[i];
+//    }
+//    std::string s = ss.str();
+//    return s;
+//}
 
 
 std::string TreeNode::SubTreeAsString(TreeNode* node){
@@ -55,10 +54,10 @@ std::string TreeNode::SubTreeAsString(TreeNode* node){
     }
 
     std::string result;
-    result = "{" + vecToString(node->data) + ", left:[" + leftStr + "], right:[" + rightStr + "], up:[" + upStr + "], down:[" + downStr + "]}";
+    result = "{" + to_string(node->data) + ", left:[" + leftStr + "], right:[" + rightStr + "], up:[" + upStr + "], down:[" + downStr + "]}";
     return result;
 }
-TreeNode* TreeNode::Insert(const vector<int>& val, TreeNode*& node, Direction dir) {
+TreeNode* TreeNode::Insert(const size_t& val, TreeNode*& node, Direction dir) {
     if(node == nullptr){
         node = new TreeNode(val);
         return node;
@@ -89,7 +88,7 @@ TreeNode* TreeNode::Insert(const vector<int>& val, TreeNode*& node, Direction di
     return nullptr;
 }
 
-bool TreeNode::ifNodeExists(TreeNode* node, const vector<int>& val)
+bool TreeNode::ifNodeExists(TreeNode* node, const size_t& val)
 {
     if (node == nullptr)
         return false;

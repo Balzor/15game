@@ -24,71 +24,62 @@ void buildTree(int size, const vector<int> &gameFieldVector, TreeNode* myTree, T
 
 size_t zeroPosition(const vector<int> &gameFieldVector);
 
-//bool ifNodeExists(TreeNode *treeNode, const vector<int>& vector);
-
 void test() {
+    bool exportFile;
+    ofstream gameFile;
+
+    cout << "Do you want to export your results to a .txt file?\n";
+
+    do{
+        cout << "Enter (0) for no and (1) for yes\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        cin >> exportFile;
+    }while(cin.fail());
+    if(exportFile){
+        gameFile.open ("15-file.txt");
+    }
+
+    int existsStorage=0;
     int size;
     cout << "set the size of the puzzle\n";
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(),'\n');
     cin >> size;
 
-    auto gameField = new int * [ size ];
-    for (int i=0; i < size; i++)
-        gameField[i] = new int [size];
-
-    ofstream gameFile;
-    gameFile.open ("15-file.txt");
-	vector<int> gameFieldVector;
-//	vector<int> gameFieldVector2;
+    vector<int> gameFieldVector;
+    vector<size_t> storage;
 
     int number;
-    int count=0;
 
-    for (int i = 0; i < size; i++){
-        for(int j=0; j < size; j++){
-            bool exists = true;
-            if (count != (size*size-1) ){
-                do {
-                    do {
-                        cout << "Please choose a unique number for the " << i << "," << j << " position\n";
-                        cin.clear();
-                        cin.ignore(numeric_limits<streamsize>::max(),'\n');
-                        cin >> number;
+    for (int i = 0; i < size*size-1; i++){
+        bool exists = true;
+        do{
+            do {
+                cout << "Please choose a unique number for the " << i  << " position.\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                cin >> number;
 
-                        for (int ii = 0; ii < size; ii++){
-                            for(int jj=0; jj < size; jj++){
-                                int* currentElement = &(gameField[ii][jj]);
-                                if (number >20 || number < 1){
-                                    cout << "Value must be between 1-4\n";
-                                    exists =true;
-                                    break;
-                                }
-                                if (*currentElement == number){
-                                    cout << "Value exists " << *currentElement <<  endl;
-                                    exists = true;
-                                    break;
-                                }else{
-                                    exists = false;
-                                }
-                            }
-                            if (exists)
-                                break;
-                        }
-                        gameField[i][j] = number;
-                    }while(exists);
-                    gameFieldVector.push_back(number);
-                }while(cin.fail());
-                count++;
-            }else{
-                gameField[i][j] =0;
-                gameFieldVector.push_back(0);
-            }
-        }
+                if (number <= (size*size+size) && number >= 1){
+                    if(std::find(gameFieldVector.begin(), gameFieldVector.end(),number)!=gameFieldVector.end()){
+                        cout<<"Number "<<number << " already exists.\n";
+                    }else{
+                        gameFieldVector.push_back(number);
+                        exists=false;
+                    }
+                }else{
+                    cout<<"Number must be between "<<size*size+size << " and 1.\n";
+                    exists = true;
+                }
+            }while(exists);
+        }while(cin.fail());
     }
+    gameFieldVector.push_back(0);
+
     int countVector=0;
-    for (int x : gameFieldVector){
-        cout  << setw(2) << x << " ";
+    for (int x:gameFieldVector){
+        cout << "| " << setw(2) << x << " |";
         gameFile << setw(2) << x << " ";
         countVector++;
         if (countVector==size){
@@ -98,23 +89,31 @@ void test() {
         }
     }
     gameFile << "\n";
+
     if (!gameFile.is_open())return;
     gameFile.close();
 
-    // Make the nodes
-//    TreeNode myTree {&root};
-    TreeNode root(gameFieldVector);
+    size_t g = TreeNode::hash(gameFieldVector);
+
+    if (std::find(storage.begin(), storage.end(),g)!=storage.end()){
+        cout<<"in\n";
+        existsStorage++;
+    }
+    storage.push_back(g);
+
+
 
     size_t x = TreeNode::hash(gameFieldVector);
     cout << x;
-    // Make and Print the tree
-//    TreeNode myTree {&root};
 
-   // buildTree(size, gameFieldVector, &root, &root);
+    TreeNode root(x);
+
+    buildTree(size, gameFieldVector, &root, &root);
 
     root.Print();
     gameFieldVector.clear();
-    delete [] gameField;
+
+    cout<< "\n" <<existsStorage<< " duplications\n";
 }
 
 size_t zeroPosition(const vector<int> &gameFieldVector) {
@@ -131,10 +130,11 @@ void buildTree(int size, const vector<int> &gameFieldVector, TreeNode* myTree, T
 //        //go left
 		vector<int> gameFieldLeft = gameFieldVector;
         iter_swap(gameFieldLeft.begin() + position, gameFieldLeft.begin() + (position-1));
-        if(TreeNode::ifNodeExists(root,gameFieldLeft)){
+        size_t hashedLeft = TreeNode::hash(gameFieldLeft);
+        if(TreeNode::ifNodeExists(root,hashedLeft)){
             //cout<<"no LEFT\n";
         }else{
-            TreeNode* node = TreeNode::Insert(gameFieldLeft, myTree, LEFT);
+            TreeNode* node = TreeNode::Insert(hashedLeft, myTree, LEFT);
             if (node)
                 buildTree(size, gameFieldLeft, node, root);
         }
@@ -143,10 +143,11 @@ void buildTree(int size, const vector<int> &gameFieldVector, TreeNode* myTree, T
         //go right
         vector<int> gameFieldRight = gameFieldVector;
         iter_swap(gameFieldRight.begin() + position, gameFieldRight.begin() + (position+1));
-        if(TreeNode::ifNodeExists(root,gameFieldRight)){
+        size_t hashedRight = TreeNode::hash(gameFieldRight);
+        if(TreeNode::ifNodeExists(root,hashedRight)){
            // cout<<"no RIGHT\n";
         }else{
-            TreeNode* node = TreeNode::Insert(gameFieldRight, myTree, RIGHT);
+            TreeNode* node = TreeNode::Insert(hashedRight, myTree, RIGHT);
             if (node)
                 buildTree(size, gameFieldRight, node, root);
         }
@@ -155,10 +156,11 @@ void buildTree(int size, const vector<int> &gameFieldVector, TreeNode* myTree, T
         //go up
         vector<int> gameFieldUp = gameFieldVector;
         iter_swap(gameFieldUp.begin() + position, gameFieldUp.begin() + (position-size));
-        if(TreeNode::ifNodeExists(root,gameFieldUp)){
+        size_t hashedUp = TreeNode::hash(gameFieldUp);
+        if(TreeNode::ifNodeExists(root,hashedUp)){
            // cout<<"no UP\n";
         }else{
-            TreeNode* node = TreeNode::Insert(gameFieldUp, myTree, UP);
+            TreeNode* node = TreeNode::Insert(hashedUp, myTree, UP);
             if (node)
                 buildTree(size, gameFieldUp, node, root);
         }
@@ -167,10 +169,11 @@ void buildTree(int size, const vector<int> &gameFieldVector, TreeNode* myTree, T
         //go DOWN
         vector<int> gameFieldDown = gameFieldVector;
         iter_swap(gameFieldDown.begin() + position, gameFieldDown.begin() + (position+size));
-        if(TreeNode::ifNodeExists(root,gameFieldDown)){
+        size_t hashedDown = TreeNode::hash(gameFieldDown);
+        if(TreeNode::ifNodeExists(root,hashedDown)){
             //cout<<"no DOWN\n";
         }else{
-            TreeNode* node = TreeNode::Insert(gameFieldDown, myTree, DOWN);
+            TreeNode* node = TreeNode::Insert(hashedDown, myTree, DOWN);
             if (node)
                 buildTree(size, gameFieldDown, node, root);
         }
@@ -303,6 +306,13 @@ void manuallyGeneratedGame() {
 }
 
 void autoGeneratedGame() {
+    int existsStorage=0;
+    int size;
+    cout << "set the size of the puzzles\n";
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+    cin >> size;
+
     int puzzles;
     bool exportFile;
     ofstream gameFile;
@@ -333,63 +343,49 @@ void autoGeneratedGame() {
 
     srand(time(nullptr));
 
-    auto gameField = new int * [ 4 ];
-    for (int i=0; i < 4; i++)
-        gameField[i] = new int [4];
-
     for (int p = 0; p < puzzles; p++){
         cout << p+1 <<".\n";
+        for (int i = 0; i < size*size-1; i++){
+            bool exists = true;
+            do {
+                int randomval = rand() % (size*size+size);
 
-        int count=0;
-        for (int i = 0; i < 4; i++){
-            for(int j=0; j < 4; j++){
-                bool exists = true;
-                if (count!=15){
-                    do {
-                        do {
-                            int randomval = rand() % 20;
-
-                            cin.clear();
-
-                            for (int ii = 0; ii < 4; ii++){
-                                for(int jj=0; jj < 4; jj++){
-                                    int* currentElement = &(gameField[ii][jj]);
-                                    if (randomval >20 || randomval < 1){
-                                        exists =true;
-                                        break;
-                                    }
-                                    if (*currentElement == randomval){
-                                        exists = true;
-                                        break;
-                                    }else{
-                                        exists = false;
-                                    }
-                                }
-                                if (exists)
-                                    break;
-                            }
-                            gameField[i][j] = randomval;
-                        }while(exists);
-                    }while(cin.fail());
-                    count++;
-                }else{
-                    gameField[i][j] =0;
-                }
-            }
+                if (randomval <= (size*size+size) && randomval >= 1){
+                    if(std::find(gameFieldVector.begin(), gameFieldVector.end(),randomval)!=gameFieldVector.end()){
+                    }else{
+                        gameFieldVector.push_back(randomval);
+                        exists=false;
+                    }
+                }else exists = true;
+            }while(exists);
         }
-
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                cout << "| " << setw(2) << gameField[i][j] << " |";
-                gameFile << setw(2) << gameField[i][j] << " ";
+        gameFieldVector.push_back(0);
+        int countVector=0;
+        for (int x:gameFieldVector){
+            cout << "| " << setw(2) << x << " |";
+            gameFile << setw(2) << x << " ";
+            countVector++;
+            if (countVector==size){
+                countVector=0;
+                cout<<"\n";
+                gameFile << "\n";
             }
-            cout << "\n";
-            gameFile << "\n";
         }
         gameFile << "\n";
+
+        size_t x = TreeNode::hash(gameFieldVector);
+
+        if (std::find(storage.begin(), storage.end(),x)!=storage.end()){
+            cout<<"in\n";
+            existsStorage++;
+        }
+        storage.push_back(x);
+        gameFieldVector.clear();
     }
     if (!gameFile.is_open())return;
     gameFile.close();
+
+    cout<< "\n" <<existsStorage<< " duplications\n";
 }
 
 void readFile() {

@@ -18,20 +18,20 @@ enum Direction {
 };
 
 struct TreeNode{
-    vector<int> data;
+    size_t data;
     TreeNode* left;
     TreeNode* right;
     TreeNode* up;
     TreeNode* down;
 
     // constructor
-	TreeNode(const vector<int>& data) : data(data), left(nullptr), right(nullptr),down(nullptr),up(nullptr) {};
+	TreeNode(const size_t & data) : data(data), left(nullptr), right(nullptr),down(nullptr),up(nullptr) {};
 
 public:
 
     void Print();
-    static TreeNode* Insert(const vector<int>& val, TreeNode*& node, Direction dir);
-    static bool ifNodeExists(TreeNode* node, const vector<int>& val);
+    static TreeNode* Insert(const size_t& val, TreeNode*& node, Direction dir);
+    static bool ifNodeExists(TreeNode* node, const size_t& val);
 
     //https://stackoverflow.com/questions/20511347/a-good-hash-function-for-a-vector
     static std::size_t hash(std::vector<int> const& vec) {
