@@ -22,6 +22,8 @@ void printIT(int *const *gameField, bool countZero);
 
 void buildTree(int size, const vector<int> &gameFieldVector, TreeNode* myTree, TreeNode* root);
 
+void buildStorage(vector<size_t> storage,int size,const vector<int> &gameFieldVector);
+
 size_t zeroPosition(const vector<int> &gameFieldVector);
 
 void test() {
@@ -101,19 +103,27 @@ void test() {
     }
     storage.push_back(g);
 
-
-
     size_t x = TreeNode::hash(gameFieldVector);
-    cout << x;
 
     TreeNode root(x);
 
-    buildTree(size, gameFieldVector, &root, &root);
+//    buildTree(size, gameFieldVector, &root, &root);
+    buildStorage(storage,size,gameFieldVector);
 
     root.Print();
     gameFieldVector.clear();
 
     cout<< "\n" <<existsStorage<< " duplications\n";
+
+    for (int o:storage){
+        cout << "| " << setw(2) << o << " |";
+        countVector++;
+        if (countVector==size){
+            countVector=0;
+            cout<<"\n";
+            gameFile << "\n";
+        }
+    }
 }
 
 size_t zeroPosition(const vector<int> &gameFieldVector) {
@@ -123,8 +133,40 @@ size_t zeroPosition(const vector<int> &gameFieldVector) {
     return 0;
 }
 
-void buildTree(int size, const vector<int> &gameFieldVector, TreeNode* myTree, TreeNode* root) {
+void buildStorage(vector<size_t> storage, int size, const vector<int> &gameFieldVector){
     size_t position = zeroPosition(gameFieldVector);
+
+    if(position%size>0){
+        //left
+        vector<int> gameFieldLeft = gameFieldVector;
+        iter_swap(gameFieldLeft.begin() + position, gameFieldLeft.begin() + (position-1));
+        size_t hashedLeft = TreeNode::hash(gameFieldLeft);
+        if (std::find(storage.begin(), storage.end(),hashedLeft)!=storage.end()){
+
+        }else{
+            storage.push_back(hashedLeft);
+            buildStorage(storage, size, gameFieldLeft);
+        }
+    }
+    if (position % size != (size-1)) {
+        //go right
+        vector<int> gameFieldRight = gameFieldVector;
+        iter_swap(gameFieldRight.begin() + position, gameFieldRight.begin() + (position+1));
+        size_t hashedRight = TreeNode::hash(gameFieldRight);
+        if (std::find(storage.begin(), storage.end(),hashedRight)!=storage.end()){
+
+        }else{
+            storage.push_back(hashedRight);
+            buildStorage(storage, size, gameFieldRight);
+        }
+    }
+}
+
+void buildTree(int size, const vector<int> &gameFieldVector, TreeNode* myTree, TreeNode* root) {
+    vector<size_t> storage;
+    size_t position = zeroPosition(gameFieldVector);
+
+
 
     if (position % size > 0){
 //        //go left
