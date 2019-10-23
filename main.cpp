@@ -97,10 +97,10 @@ void test() {
 
     size_t g = TreeNode::hash(gameFieldVector);
 
-    if (std::find(storage.begin(), storage.end(),g)!=storage.end()){
-        cout<<"in\n";
-        existsStorage++;
-    }
+//    if (std::find(storage.begin(), storage.end(),g)!=storage.end()){
+//        cout<<"in\n";
+//        existsStorage++;
+//    }
     storage.push_back(g);
 
     size_t x = TreeNode::hash(gameFieldVector);
@@ -110,19 +110,20 @@ void test() {
 //    buildTree(size, gameFieldVector, &root, &root);
     buildStorage(storage,size,gameFieldVector);
 
-    root.Print();
+//    root.Print();
     gameFieldVector.clear();
 
     cout<< "\n" <<existsStorage<< " duplications\n";
 
     for (int o:storage){
-        cout << "| " << setw(2) << o << " |";
-        countVector++;
-        if (countVector==size){
-            countVector=0;
-            cout<<"\n";
-            gameFile << "\n";
-        }
+        cout << "| " << o << " |";
+//        countVector++;
+//        if (countVector==size){
+//            countVector=0;
+//            cout<<"\n";
+//            gameFile << "\n";
+//        }
+//        cout<< "\n";
     }
 }
 
@@ -136,37 +137,63 @@ size_t zeroPosition(const vector<int> &gameFieldVector) {
 void buildStorage(vector<size_t> storage, int size, const vector<int> &gameFieldVector){
     size_t position = zeroPosition(gameFieldVector);
 
-    if(position%size>0){
+    if(position % size > 0){
         //left
         vector<int> gameFieldLeft = gameFieldVector;
         iter_swap(gameFieldLeft.begin() + position, gameFieldLeft.begin() + (position-1));
         size_t hashedLeft = TreeNode::hash(gameFieldLeft);
         if (std::find(storage.begin(), storage.end(),hashedLeft)!=storage.end()){
-
+            cout<<"no left";
         }else{
             storage.push_back(hashedLeft);
             buildStorage(storage, size, gameFieldLeft);
         }
     }
-    if (position % size != (size-1)) {
-        //go right
-        vector<int> gameFieldRight = gameFieldVector;
-        iter_swap(gameFieldRight.begin() + position, gameFieldRight.begin() + (position+1));
-        size_t hashedRight = TreeNode::hash(gameFieldRight);
-        if (std::find(storage.begin(), storage.end(),hashedRight)!=storage.end()){
-
-        }else{
-            storage.push_back(hashedRight);
-            buildStorage(storage, size, gameFieldRight);
-        }
-    }
+//    if (position % size != (size-1)) {
+//        //go right
+//        vector<int> gameFieldRight = gameFieldVector;
+//        iter_swap(gameFieldRight.begin() + position, gameFieldRight.begin() + (position+1));
+//        size_t hashedRight = TreeNode::hash(gameFieldRight);
+//        if (std::find(storage.begin(), storage.end(),hashedRight)!=storage.end()){
+//
+//        }else{
+//            storage.push_back(hashedRight);
+//            buildStorage(storage, size, gameFieldRight);
+//        }
+//    }
+//    if (position > (size-1)) {
+//        //go up
+//        vector<int> gameFieldUp = gameFieldVector;
+//        iter_swap(gameFieldUp.begin() + position, gameFieldUp.begin() + (position-size));
+//        size_t hashedUp = TreeNode::hash(gameFieldUp);
+//        if (std::find(storage.begin(), storage.end(),hashedUp)!=storage.end()){
+//
+//        }else{
+//            storage.push_back(hashedUp);
+//            buildStorage(storage, size, gameFieldUp);
+//        }
+//    }
+//    if (position < (size*size-size)) {
+//        //go down
+//        vector<int> gameFieldDown = gameFieldVector;
+//        iter_swap(gameFieldDown.begin() + position, gameFieldDown.begin() + (position-size));
+//        size_t hashedDown = TreeNode::hash(gameFieldDown);
+//        if (std::find(storage.begin(), storage.end(),hashedDown)!=storage.end()){
+//
+//        }else{
+//            storage.push_back(hashedDown);
+//            buildStorage(storage, size, gameFieldDown);
+//        }
+//    }
 }
 
 void buildTree(int size, const vector<int> &gameFieldVector, TreeNode* myTree, TreeNode* root) {
     vector<size_t> storage;
     size_t position = zeroPosition(gameFieldVector);
 
-
+    if (position == size*size-1){
+        cout<< "we got a zero\n";
+    }
 
     if (position % size > 0){
 //        //go left
