@@ -22,7 +22,7 @@ void printIT(int *const *gameField, bool countZero);
 
 void buildTree(int size, const vector<int> &gameFieldVector, TreeNode* myTree, TreeNode* root);
 
-void buildStorage(vector<size_t> storage,int size,const vector<int> &gameFieldVector);
+void buildStorage(vector<vector<int>>& zeroStorage,vector<size_t>& storage,int size,const vector<int> &gameFieldVector);
 
 size_t zeroPosition(const vector<int> &gameFieldVector);
 
@@ -51,6 +51,7 @@ void test() {
 
     vector<int> gameFieldVector;
     vector<size_t> storage;
+    vector<vector<int>> zeroStorage;
 
     int number;
 
@@ -102,29 +103,82 @@ void test() {
 //        existsStorage++;
 //    }
     storage.push_back(g);
+    zeroStorage.push_back(gameFieldVector);
 
-    size_t x = TreeNode::hash(gameFieldVector);
+//    buildStorage(zeroStorage,storage,size,gameFieldVector);
 
-    TreeNode root(x);
-
-//    buildTree(size, gameFieldVector, &root, &root);
-    buildStorage(storage,size,gameFieldVector);
-
-//    root.Print();
     gameFieldVector.clear();
 
-    cout<< "\n" <<existsStorage<< " duplications\n";
-
-    for (int o:storage){
-        cout << "| " << o << " |";
-//        countVector++;
-//        if (countVector==size){
-//            countVector=0;
-//            cout<<"\n";
-//            gameFile << "\n";
+    int countZero=0;
+    int countMoves=0;
+    int continueRow=0;
+    int continueCol=0;
+    int reverseRow=0;
+    int reverseCol=0;
+    for (const vector<int>& o:zeroStorage){
+//        for (int k:o){
+//            cout << setw(2) << k;
+//            countZero++;
+//            if (countZero==size){
+//                countZero=0;
+//                cout<<"\n";
+//            }
 //        }
 //        cout<< "\n";
+        bool countZeroo=1;
+        countMoves++;
+        int continueRowCount=0;
+        int reverseRowCount=0;
+        for (int i = 0; i < size*size; i++) {
+            if (o[i]+1 == o[i+1]){
+                continueRowCount++;
+            }
+            if (continueRowCount == 3){
+                continueRowCount = 0;
+                continueRow++;
+            }
+            if(i>size*size-size){
+                if (i == 0 && (o[i] + 1 == o[i+size]) &&
+                    (o[i] + 2 == o[i+size*2]) && (o[i] + 3 == o[i+size*3])) {
+                    continueCol++;
+                }
+            }
+
+            if (o[i]-1 == o[i+1]){
+                reverseRowCount++;
+            }
+            if (reverseRowCount == 3){
+                reverseRowCount = 0;
+                reverseRow++;
+            }
+            if (i == 0 && (o[i] - 1 == o[i + size]) &&
+                (o[i] - 2 == o[i + 2]) && (o[i] - 3 == o[i + 3])) {
+                reverseCol++;
+            }
+
+            if (countZeroo){ // for counting the line with 0 as well
+                if (continueRowCount == 2 && o[i + 1] == 0) {
+                    continueRow++;
+                }
+                if (i == 0 && o[i + 3] == 0 &&
+                    ((o[i] + 1 == o[i + 1]) && (o[i] + 2 == o[i + 2]))) {
+                    continueCol++;
+                }
+                if (reverseRowCount == 2 && o[i + 1] == 0) {
+                    reverseRow++;
+                }
+                if (i == 0 && o[i + 3] == 0 &&
+                    ((o[i] - 1 == o[i + 1]) && (o[i] - 2 == o[i + 2]))) {
+                    reverseCol++;
+                }
+            }
+        }
     }
+    cout <<"row = " << continueRow <<"\n"
+        "column = " << continueCol << "\n"
+        "reverse row = "<< reverseRow << "\n"
+        "reverse column = " << reverseCol << "\n\n";
+    cout<< "There are " <<countMoves << " possible turns\n";
 }
 
 size_t zeroPosition(const vector<int> &gameFieldVector) {
@@ -134,7 +188,7 @@ size_t zeroPosition(const vector<int> &gameFieldVector) {
     return 0;
 }
 
-void buildStorage(vector<size_t> storage, int size, const vector<int> &gameFieldVector){
+void buildStorage(vector<vector<int>>& zeroStorage, vector<size_t>& storage, int size, const vector<int> &gameFieldVector){
     size_t position = zeroPosition(gameFieldVector);
 
     if(position % size > 0){
@@ -142,49 +196,49 @@ void buildStorage(vector<size_t> storage, int size, const vector<int> &gameField
         vector<int> gameFieldLeft = gameFieldVector;
         iter_swap(gameFieldLeft.begin() + position, gameFieldLeft.begin() + (position-1));
         size_t hashedLeft = TreeNode::hash(gameFieldLeft);
-        if (std::find(storage.begin(), storage.end(),hashedLeft)!=storage.end()){
-            cout<<"no left";
-        }else{
+        if (!(std::find(storage.begin(), storage.end(), hashedLeft) != storage.end())) {
             storage.push_back(hashedLeft);
-            buildStorage(storage, size, gameFieldLeft);
+            if(zeroPosition(gameFieldLeft) == size*size-1)
+                zeroStorage.push_back(gameFieldLeft);
+            buildStorage(zeroStorage, storage, size, gameFieldLeft);
         }
     }
-//    if (position % size != (size-1)) {
-//        //go right
-//        vector<int> gameFieldRight = gameFieldVector;
-//        iter_swap(gameFieldRight.begin() + position, gameFieldRight.begin() + (position+1));
-//        size_t hashedRight = TreeNode::hash(gameFieldRight);
-//        if (std::find(storage.begin(), storage.end(),hashedRight)!=storage.end()){
-//
-//        }else{
-//            storage.push_back(hashedRight);
-//            buildStorage(storage, size, gameFieldRight);
-//        }
-//    }
-//    if (position > (size-1)) {
-//        //go up
-//        vector<int> gameFieldUp = gameFieldVector;
-//        iter_swap(gameFieldUp.begin() + position, gameFieldUp.begin() + (position-size));
-//        size_t hashedUp = TreeNode::hash(gameFieldUp);
-//        if (std::find(storage.begin(), storage.end(),hashedUp)!=storage.end()){
-//
-//        }else{
-//            storage.push_back(hashedUp);
-//            buildStorage(storage, size, gameFieldUp);
-//        }
-//    }
-//    if (position < (size*size-size)) {
-//        //go down
-//        vector<int> gameFieldDown = gameFieldVector;
-//        iter_swap(gameFieldDown.begin() + position, gameFieldDown.begin() + (position-size));
-//        size_t hashedDown = TreeNode::hash(gameFieldDown);
-//        if (std::find(storage.begin(), storage.end(),hashedDown)!=storage.end()){
-//
-//        }else{
-//            storage.push_back(hashedDown);
-//            buildStorage(storage, size, gameFieldDown);
-//        }
-//    }
+    if (position % size != (size-1) ) {
+        //go right
+        vector<int> gameFieldRight = gameFieldVector;
+        iter_swap(gameFieldRight.begin() + position, gameFieldRight.begin() + (position+1));
+        size_t hashedRight = TreeNode::hash(gameFieldRight);
+        if (!(std::find(storage.begin(), storage.end(), hashedRight) != storage.end())) {
+            storage.push_back(hashedRight);
+            if(zeroPosition(gameFieldRight) == size*size-1)
+                zeroStorage.push_back(gameFieldRight);
+            buildStorage(zeroStorage, storage, size, gameFieldRight);
+        }
+    }
+    if (position > (size-1)) {
+        //go up
+        vector<int> gameFieldUp = gameFieldVector;
+        iter_swap(gameFieldUp.begin() + position, gameFieldUp.begin() + (position-size));
+        size_t hashedUp = TreeNode::hash(gameFieldUp);
+        if (!(std::find(storage.begin(), storage.end(), hashedUp) != storage.end())) {
+            storage.push_back(hashedUp);
+            if(zeroPosition(gameFieldUp) == size*size-1)
+                zeroStorage.push_back(gameFieldUp);
+            buildStorage(zeroStorage, storage, size, gameFieldUp);
+        }
+    }
+    if (position < (size*size-size)) {
+        //go down
+        vector<int> gameFieldDown = gameFieldVector;
+        iter_swap(gameFieldDown.begin() + position, gameFieldDown.begin() + (position+size));
+        size_t hashedDown = TreeNode::hash(gameFieldDown);
+        if (!(std::find(storage.begin(), storage.end(), hashedDown) != storage.end())) {
+            storage.push_back(hashedDown);
+            if(zeroPosition(gameFieldDown) == size*size-1)
+                zeroStorage.push_back(gameFieldDown);
+            buildStorage(zeroStorage, storage, size, gameFieldDown);
+        }
+    }
 }
 
 void buildTree(int size, const vector<int> &gameFieldVector, TreeNode* myTree, TreeNode* root) {
