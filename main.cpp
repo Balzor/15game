@@ -26,6 +26,8 @@ void buildStorage(vector<vector<int>>& zeroStorage,vector<size_t>& storage,int s
 
 size_t zeroPosition(const vector<int> &gameFieldVector);
 
+int findContinuities(int size, const vector<vector<int>> &zeroStorage, bool countZeroo);
+
 void test() {
     bool exportFile;
     ofstream gameFile;
@@ -42,12 +44,22 @@ void test() {
         gameFile.open ("15-file.txt");
     }
 
-    int existsStorage=0;
     int size;
-    cout << "set the size of the puzzle\n";
-    cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(),'\n');
-    cin >> size;
+    do{
+        cout << "set the size of the puzzle\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        cin >> size;
+    }while(cin.fail());
+
+    bool repeat;
+    do{
+        cout << "Do you want repeat numbers\n(1).Yes\n(0).No\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        cin >> repeat;
+    }while(cin.fail());
+
 
     vector<int> gameFieldVector;
     vector<size_t> storage;
@@ -64,16 +76,21 @@ void test() {
                 cin.ignore(numeric_limits<streamsize>::max(),'\n');
                 cin >> number;
 
-                if (number <= (size*size+size) && number >= 1){
-                    if(std::find(gameFieldVector.begin(), gameFieldVector.end(),number)!=gameFieldVector.end()){
-                        cout<<"Number "<<number << " already exists.\n";
-                    }else{
-                        gameFieldVector.push_back(number);
-                        exists=false;
-                    }
+                if(repeat){
+                    gameFieldVector.push_back(number);
+                    exists=false;
                 }else{
-                    cout<<"Number must be between "<<size*size+size << " and 1.\n";
-                    exists = true;
+                    if (number <= (size*size+size) && number >= 1){
+                        if(std::find(gameFieldVector.begin(), gameFieldVector.end(),number)!=gameFieldVector.end()){
+                            cout<<"Number "<<number << " already exists.\n";
+                        }else{
+                            gameFieldVector.push_back(number);
+                            exists=false;
+                        }
+                    }else{
+                        cout<<"Number must be between "<<size*size+size << " and 1.\n";
+                        exists = true;
+                    }
                 }
             }while(exists);
         }while(cin.fail());
@@ -97,80 +114,107 @@ void test() {
     gameFile.close();
 
     size_t g = TreeNode::hash(gameFieldVector);
-
-//    if (std::find(storage.begin(), storage.end(),g)!=storage.end()){
-//        cout<<"in\n";
-//        existsStorage++;
-//    }
     storage.push_back(g);
+
     zeroStorage.push_back(gameFieldVector);
 
-//    buildStorage(zeroStorage,storage,size,gameFieldVector);
+    bool countZeroo=true;
+    bool continuities;
+    do{
+        cout<<"Do you want to see all possible continuities from this state?\n(1).Yes\n(0).No\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        cin>>continuities;
+    }while(cin.fail());
 
+    if (continuities){
+        do{
+            cout<<"Do you want to count the empty as a continuity?\n(1).Yes\n(0).No\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
+            cin>>countZeroo;
+        }while(cin.fail());
+
+        buildStorage(zeroStorage,storage,size,gameFieldVector);
+    }
+    int countMoves = findContinuities(size, zeroStorage, countZeroo);
+
+    cout<< "There are " <<countMoves << " possible turns\n";
     gameFieldVector.clear();
+}
 
-    int countZero=0;
+int findContinuities(int size, const vector<vector<int>> &zeroStorage, bool countZeroo) {
     int countMoves=0;
     int continueRow=0;
     int continueCol=0;
     int reverseRow=0;
     int reverseCol=0;
     for (const vector<int>& o:zeroStorage){
-//        for (int k:o){
-//            cout << setw(2) << k;
-//            countZero++;
-//            if (countZero==size){
-//                countZero=0;
-//                cout<<"\n";
-//            }
-//        }
-//        cout<< "\n";
-        bool countZeroo=1;
         countMoves++;
         int continueRowCount=0;
         int reverseRowCount=0;
-        for (int i = 0; i < size*size; i++) {
+        int continueColCount =0;
+        int reverseColCount =0;
+        int counting=0;
+        for (int i = 0; i < size*size-1; i++) {
             if (o[i]+1 == o[i+1]){
                 continueRowCount++;
             }
-            if (continueRowCount == 3){
-                continueRowCount = 0;
-                continueRow++;
-            }
-            if(i>size*size-size){
-                if (i == 0 && (o[i] + 1 == o[i+size]) &&
-                    (o[i] + 2 == o[i+size*2]) && (o[i] + 3 == o[i+size*3])) {
-                    continueCol++;
-                }
-            }
-
             if (o[i]-1 == o[i+1]){
                 reverseRowCount++;
             }
-            if (reverseRowCount == 3){
+
+            if (continueRowCount == size-1){
+                continueRowCount = 0;
+                continueRow++;
+            }
+            if (reverseRowCount == size-1){
                 reverseRowCount = 0;
                 reverseRow++;
             }
-            if (i == 0 && (o[i] - 1 == o[i + size]) &&
-                (o[i] - 2 == o[i + 2]) && (o[i] - 3 == o[i + 3])) {
+
+            if(i<((size*size)-size-1)){
+                if(o[i]+1==o[i+size]){
+                    continueColCount++;
+                }
+                if(o[i]-1==o[i+size]){
+                    reverseColCount++;
+                }
+            }
+
+            if (continueColCount == size-1){
+                continueColCount = 0;
+                continueCol++;
+            }
+            if (reverseColCount == size-1){
+                reverseColCount = 0;
                 reverseCol++;
             }
 
             if (countZeroo){ // for counting the line with 0 as well
-                if (continueRowCount == 2 && o[i + 1] == 0) {
+                if ((continueRowCount == (size-2)) && (o[i + 1] == 0)) {
+//                    cout<<"shit\n";
                     continueRow++;
                 }
-                if (i == 0 && o[i + 3] == 0 &&
-                    ((o[i] + 1 == o[i + 1]) && (o[i] + 2 == o[i + 2]))) {
-                    continueCol++;
-                }
-                if (reverseRowCount == 2 && o[i + 1] == 0) {
+                if ((reverseRowCount == (size-2)) && (o[i + 1] == 0)) {
                     reverseRow++;
                 }
-                if (i == 0 && o[i + 3] == 0 &&
-                    ((o[i] - 1 == o[i + 1]) && (o[i] - 2 == o[i + 2]))) {
-                    reverseCol++;
+                if(i<((size*size)-size-1)){
+                    if((reverseColCount == (size-2)) && o[i+size]==0){
+                        reverseCol++;
+                    }
+                    if((continueColCount == (size-2)) && o[i+size]==0){
+                        continueCol++;
+                    }
                 }
+            }
+            counting++;
+            if (counting==size){
+                 continueRowCount=0;
+                 reverseRowCount=0;
+                 continueColCount =0;
+                 reverseColCount=0;
+                 counting=0;
             }
         }
     }
@@ -178,7 +222,7 @@ void test() {
         "column = " << continueCol << "\n"
         "reverse row = "<< reverseRow << "\n"
         "reverse column = " << reverseCol << "\n\n";
-    cout<< "There are " <<countMoves << " possible turns\n";
+    return countMoves;
 }
 
 size_t zeroPosition(const vector<int> &gameFieldVector) {
@@ -333,10 +377,12 @@ int main () {
                 readFile();
             }
         }while(valid);
-        cout << "Wanna go again?\n(1).Yes\n(0).No\n";
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cin >> again;
+        do{
+            cout << "Wanna go again?\n(1).Yes\n(0).No\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin >> again;
+        }while(cin.fail());
     }while(again);
 }
 
