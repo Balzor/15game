@@ -10,7 +10,7 @@
 
 using namespace std;
 
-struct TreeNode{
+struct Puzzles{
 public:
     //https://stackoverflow.com/questions/20511347/a-good-hash-function-for-a-vector
     static std::size_t hash(std::vector<int> const& vec) {
