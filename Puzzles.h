@@ -10,7 +10,8 @@
 
 using namespace std;
 
-struct Puzzles{
+class Puzzles{
+
 public:
     //https://stackoverflow.com/questions/20511347/a-good-hash-function-for-a-vector
     static std::size_t hash(std::vector<int> const& vec) {
@@ -21,4 +22,5 @@ public:
         return seed;
     }
 };
+
 #endif //INC_15GAME_PUZZLES_H
