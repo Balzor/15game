@@ -1,3 +1,0 @@
-C:/Users/konst/ProgrammingProjects/15game/15game/cmake-build-debug/CMakeFiles/15game.dir
-C:/Users/konst/ProgrammingProjects/15game/15game/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/konst/ProgrammingProjects/15game/15game/cmake-build-debug/CMakeFiles/rebuild_cache.dir
